@@ -68,7 +68,7 @@ open class ItemBaseController<T: UIView>: UIViewController, ItemController, UIGe
     }
 
     fileprivate var imageInsets: CGFloat {
-        let additionalInsets: CGFloat = 114
+        let additionalInsets: CGFloat = 110
         let insets = defaultInsets.top + defaultInsets.bottom + additionalInsets
         return insets
     }
