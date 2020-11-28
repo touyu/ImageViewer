@@ -59,6 +59,20 @@ open class ItemBaseController<T: UIView>: UIViewController, ItemController, UIGe
     // TRANSITIONS
     fileprivate var swipeToDismissTransition: GallerySwipeToDismissTransition?
 
+    fileprivate var defaultInsets: UIEdgeInsets {
+        if #available(iOS 11.0, *) {
+            return view.safeAreaInsets
+        } else {
+            return UIEdgeInsets(top: 20.0, left: 0.0, bottom: 0.0, right: 0.0)
+        }
+    }
+
+    fileprivate var imageInsets: CGFloat {
+        let additionalInsets: CGFloat = 114
+        let insets = defaultInsets.top + defaultInsets.bottom + additionalInsets
+        return insets
+    }
+
 
     // MARK: - Initializers
 
@@ -243,7 +257,8 @@ open class ItemBaseController<T: UIView>: UIViewController, ItemController, UIGe
 
         if let size = itemView.image?.size , size != CGSize.zero {
 
-            let aspectFitItemSize = aspectFitSize(forContentOfSize: size, inBounds: self.scrollView.bounds.size)
+            let bounds = CGSize(width: self.scrollView.bounds.size.width, height: self.scrollView.bounds.size.height - imageInsets)
+            let aspectFitItemSize = aspectFitSize(forContentOfSize: size, inBounds: bounds)
 
             itemView.bounds.size = aspectFitItemSize
             scrollView.contentSize = itemView.bounds.size
@@ -503,10 +518,10 @@ open class ItemBaseController<T: UIView>: UIViewController, ItemController, UIGe
     }
 
     func displacementTargetSize(forSize size: CGSize) -> CGSize {
-
         let boundingSize = rotationAdjustedBounds().size
 
-        return aspectFitSize(forContentOfSize: size, inBounds: boundingSize)
+        let bounds = CGSize(width: boundingSize.width, height: boundingSize.height - imageInsets)
+        return aspectFitSize(forContentOfSize: size, inBounds: bounds)
     }
 
     func findVisibleDisplacedView() -> DisplaceableView? {

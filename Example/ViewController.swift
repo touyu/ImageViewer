@@ -23,15 +23,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var image3: UIImageView!
     @IBOutlet weak var image4: UIImageView!
     @IBOutlet weak var image5: UIImageView!
-    @IBOutlet weak var image6: UIImageView!
-    @IBOutlet weak var image7: UIImageView!
 
     var items: [DataItem] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let imageViews = [image1, image2, image3, image4, image5, image6, image7]
+        let imageViews = [image1, image2, image3, image4, image5]
 
         for (index, imageView) in imageViews.enumerated() {
 
